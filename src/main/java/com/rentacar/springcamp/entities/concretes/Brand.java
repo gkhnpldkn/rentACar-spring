@@ -16,11 +16,11 @@ import java.util.List;
 @Entity
 public class Brand {
     @Id //  bu anıtasyonu verevrek bunun PK olduğunu belirtiyotuz
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name = "name")
-    private  String name;
+    private String name;
     @OneToMany(mappedBy = "brand")
- private List<Model> models;
+    private List<Model> models;
 }

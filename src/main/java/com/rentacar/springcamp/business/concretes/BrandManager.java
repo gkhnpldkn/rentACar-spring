@@ -21,21 +21,22 @@ import java.util.stream.Collectors;
 public class BrandManager implements BrandService {
     private BrandRepository brandRepository;
     private ModelMapperService modelMapperService;
-private BrandBusinessRules brandBusinessRules;
+    private BrandBusinessRules brandBusinessRules;
+
     @Override
     public List<GetAllBrandResponse> getAll() {
         List<Brand> brands = brandRepository.findAll();
 
-        List<GetAllBrandResponse> brandsResponse=brands.stream().map(brand->this.modelMapperService.forResponse()
-                .map(brand,GetAllBrandResponse.class)).collect(Collectors.toList());
+        List<GetAllBrandResponse> brandsResponse = brands.stream().map(brand -> this.modelMapperService.forResponse()
+                .map(brand, GetAllBrandResponse.class)).collect(Collectors.toList());
         return brandsResponse;
     }
 
     @Override
     public void add(CreateBrandRequest createBrandRequest) {
         this.brandBusinessRules.checkIfBrandNameExists(createBrandRequest.getName());
-Brand brand = this.modelMapperService.forRequset().map(createBrandRequest,Brand.class);
-this.brandRepository.save(brand);
+        Brand brand = this.modelMapperService.forRequset().map(createBrandRequest, Brand.class);
+        this.brandRepository.save(brand);
     }
 
     @Override
@@ -46,14 +47,14 @@ this.brandRepository.save(brand);
 
     @Override
     public void delete(int id) {
-this.brandRepository.deleteById(id);
+        this.brandRepository.deleteById(id);
     }
 
     @Override
     public GetByIdBrandResponse getById(int id) {
         Brand brand = this.brandRepository.findById(id).get();
-        GetByIdBrandResponse response= this.modelMapperService
-                .forResponse().map(brand,GetByIdBrandResponse.class);
+        GetByIdBrandResponse response = this.modelMapperService
+                .forResponse().map(brand, GetByIdBrandResponse.class);
         return null;
     }
 }
